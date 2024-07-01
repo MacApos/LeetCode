@@ -1,7 +1,7 @@
 package Easy;
 import java.util.Arrays;
 
-public class LeetCode {
+public class LeetCode1 {
     public static int[] solution(int[] nums, int target) {
         for (int i = 0; i < nums.length - 1; i++) {
             for (int j = i + 1; j < nums.length; j++) {
