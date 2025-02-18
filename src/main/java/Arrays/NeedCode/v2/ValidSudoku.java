@@ -1,4 +1,4 @@
-package Arrays.v2;
+package Arrays.NeedCode.v2;
 
 public class ValidSudoku {
     public static void main(String[] args) {

@@ -1,9 +1,7 @@
-package Arrays.v2;
+package Arrays.NeedCode.v2;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class StringEncodeAndDecode {
     public static void main(String[] args) {
