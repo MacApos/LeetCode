@@ -5,13 +5,17 @@ import java.util.HashMap;
 
 public class TwoSum {
     public static void main(String[] args) {
-        int[] nums = {1,2,3,4};
+        int[] nums = {1, 2, 3, 4};
         int target = 3;
-        int[] bruteForceTwoSum = bruteForceTwoSum(nums, target);
-        int[] hashTableTwoSum = hashTableTwoSum(nums, target);
-        int[] sortedOrderTwoSum = sortedOrderTwoSum(nums, target);
-        System.out.println(Arrays.toString(sortedOrderTwoSum));
 
+        int[] nums2 = {2, 7, 11, 15};
+        int target2 = 9;
+
+        int[] bruteForceTwoSum = bruteForceTwoSum(nums, target);
+        int[] sortedOrderTwoSum = sortedOrderTwoSum(nums, target);
+
+        int[] hashTableTwoSum = hashTableTwoSum(nums2, target2);
+        System.out.println(Arrays.toString(hashTableTwoSum));
     }
 
     public static int[] bruteForceTwoSum(int[] nums, int target) {
@@ -47,11 +51,12 @@ public class TwoSum {
         HashMap<Integer, Integer> hashMap = new HashMap<>();
 
         for (int i = 0; i < nums.length; i++) {
-            int res = target - nums[i];
+            int num = nums[i];
+            int res = target - num;
             if (hashMap.containsKey(res)) {
                 return new int[]{hashMap.get(res), i};
             }
-            hashMap.put(nums[i], i);
+            hashMap.put(num, i);
         }
 
         return new int[]{};

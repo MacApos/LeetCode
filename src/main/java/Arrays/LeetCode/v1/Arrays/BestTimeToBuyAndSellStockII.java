@@ -11,23 +11,22 @@ Link4: https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/solution
  */
 public class BestTimeToBuyAndSellStockII {
     public static void main(String[] args) {
-        int[] prices = {7, 1, 2, 5, 3, 6, 4};
-        int greedyMaxProfit = greedyMaxProfit(prices);
+        int[] prices = {7, 1, 5, 3, 6, 4};
+        int[] prices2 = {1, 2,  7};
+        int greedyMaxProfit = greedyMaxProfit(prices2);
         System.out.println(greedyMaxProfit);
 
     }
 
     public static int greedyMaxProfit(int[] prices) {
         int maxProfit = 0;
-        for (int i = 1; i < prices.length - 1; i++) {
+        for (int i = 1; i < prices.length; i++) {
             int currPrice = prices[i];
-            int nextPrice = prices[i + 1];
-            if (currPrice < nextPrice) {
-                maxProfit += nextPrice - currPrice;
+            int nextPrice = prices[i - 1];
+            if (nextPrice < currPrice) {
+                maxProfit += currPrice - nextPrice;
             }
         }
         return maxProfit;
     }
-
-
 }
