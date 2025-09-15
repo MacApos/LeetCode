@@ -1,5 +1,7 @@
 package BinaryTreeGeneral.general;
 
+import org.w3c.dom.Node;
+
 import java.util.Arrays;
 
 public class ConstructBinaryTreeFromPreorderAndInorderTraversal {

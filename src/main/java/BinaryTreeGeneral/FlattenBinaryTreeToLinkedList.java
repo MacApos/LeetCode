@@ -14,11 +14,11 @@ public class FlattenBinaryTreeToLinkedList {
         Integer[] node1Values = {1, 2, 5, 3, 4, null, 6};
         Integer[] node2Values = {1, null, null};
         Integer[] node3Values = {1, null, 2, null, 2, 3, null};
-        TreeNode node1 = TreeNode.createNodeBreadthFirst(node1Values);
-        TreeNode node1ForStackFlatten = TreeNode.createNodeBreadthFirst(node1Values);
-        TreeNode node2 = TreeNode.createNodeBreadthFirst(node2Values);
-        TreeNode node3 = TreeNode.createNodeBreadthFirst(node3Values);
-        TreeNode node3ForSlowFlatten = TreeNode.createNodeBreadthFirst(node3Values);
+        TreeNode node1 = (TreeNode) TreeNode.createNodeBreadthFirst(node1Values);
+        TreeNode node1ForStackFlatten = (TreeNode) TreeNode.createNodeBreadthFirst(node1Values);
+        TreeNode node2 = (TreeNode) TreeNode.createNodeBreadthFirst(node2Values);
+        TreeNode node3 = (TreeNode) TreeNode.createNodeBreadthFirst(node3Values);
+        TreeNode node3ForSlowFlatten = (TreeNode) TreeNode.createNodeBreadthFirst(node3Values);
 
         flatten(node1);
         flattenStack(node3);

@@ -1,56 +1,37 @@
 package BinaryTreeGeneral;
 
+import BinaryTreeGeneral.general.ConstructBinaryTreeFromPreorderAndInorderTraversal;
 import BinaryTreeGeneral.general.TreeNode;
+import com.sun.source.tree.Tree;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SymmetricTree {
     public static void main(String[] args) {
-        TreeNode nodes1 = TreeNode.createNodeBreadthFirst(new Integer[]{1, 2, 2, 4, 3, 3, 4});
-        TreeNode nodes2 = TreeNode.createNodeBreadthFirst(new Integer[]{1, 2, 2, null, 3, null, 3});
-        boolean symmetric = isSymmetric(nodes2);
+        Integer[] nodes1 = new Integer[]{1, 2, 2, 4, 3, 3, 4};
+        Integer[] nodes2 = new Integer[]{1, 2, 2, null, 3, null, 3};
+        TreeNode treeNodes = TreeNode.createNodeBreadthFirst(nodes1);
+        boolean symmetric = isSymmetric(treeNodes);
         System.out.println(symmetric);
     }
+    
 
     public static boolean isSymmetric(TreeNode root) {
-        List<TreeNode> left = processLeft(root.left, new ArrayList<>());
-        List<TreeNode> right = processRight(root.right, new ArrayList<>());
-
-        left.forEach(n -> System.out.println(n.val));
-        right.forEach(n -> System.out.println(n.val));
-
-        for (int i = 0; i < left.size(); i++) {
-            TreeNode l = left.get(i);
-            TreeNode r = right.get(i);
-
-            if(l==null || r==null){
-                if(l!=r){
-                    return false;
-                }
-            } else {
-                if(l.val!=r.val){
-                    return false;
-                }
-            }
-        }
-        return true;
+        List<Integer> left = helper(root.left,true, new ArrayList<>());
+        List<Integer> right = helper(root.right, false, new ArrayList<>());
+        return left.equals(right);
     }
 
-    public static List<TreeNode> processLeft(TreeNode node, List<TreeNode> nodes) {
-        nodes.add(node);
+    public static List<Integer> helper(TreeNode node, boolean isPreorder, List<Integer> nodes) {
         if (node != null) {
-            processLeft(node.left, nodes);
-            processLeft(node.right, nodes);
-        }
-        return nodes;
-    }
-
-    public static List<TreeNode> processRight(TreeNode node, List<TreeNode> nodes) {
-        nodes.add(node);
-        if (node != null) {
-            processRight(node.right, nodes);
-            processRight(node.left, nodes);
+            nodes.add(node.val);
+            TreeNode left = node.left;
+            TreeNode right = node.right;
+            helper(isPreorder ? left : right, isPreorder, nodes);
+            helper(isPreorder ? right : left, isPreorder, nodes);
+        } else {
+            nodes.add(null);
         }
         return nodes;
     }

@@ -23,7 +23,7 @@ public class TreeNode {
         this.right = right;
     }
 
-    public static TreeNode breadthFirstListToNode(int[] values) {
+    private  TreeNode breadthFirstListToNode(int[] values) {
         int j = 1;
         for (int i = 0; j < values.length; i++) {
             System.out.printf("%d %d %d\n", i, j++, j++);
