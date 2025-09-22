@@ -1,4 +1,4 @@
-package ChatGPTPropositions;
+package ChatGPTPropositions.v2;
 
 import java.util.*;
 

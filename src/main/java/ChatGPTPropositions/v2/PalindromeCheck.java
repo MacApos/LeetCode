@@ -1,4 +1,4 @@
-package ChatGPTPropositions;
+package ChatGPTPropositions.v2;
 
 public class PalindromeCheck {
     public static void main(String[] args) {

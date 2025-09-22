@@ -5,7 +5,7 @@ import java.util.HashSet;
 public class HappyNumber {
 
     public static void main(String[] args) {
-        boolean happy = isHappyV3(44);
+        boolean happy = isHappyV2(19);
         System.out.println(19 / 10);
         System.out.println(19 % 10);
         System.out.println(happy);
