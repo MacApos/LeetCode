@@ -21,8 +21,10 @@ public class PopulatingNextRightPointersInEachNodeII {
             return null;
         }
         Deque<Node> nodes = new ArrayDeque<>();
-        nodes.add(root);
-        while (!nodes.isEmpty()) {
+//        nodes.add(root);
+
+        nodes.push(root);
+        while (nodes.peek() != null || !nodes.isEmpty()) {
             int level = nodes.size();
             while (level > 0) {
                 level--;
@@ -31,10 +33,10 @@ public class PopulatingNextRightPointersInEachNodeII {
                     curr.next = nodes.peek();
                 }
                 if (curr.left != null) {
-                    nodes.push(curr.left);
+                    nodes.add(curr.left);
                 }
                 if (curr.right != null) {
-                    nodes.push(curr.right);
+                    nodes.add(curr.right);
                 }
             }
         }
