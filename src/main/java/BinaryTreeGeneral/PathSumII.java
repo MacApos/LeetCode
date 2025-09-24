@@ -1,4 +1,6 @@
-package BinaryTreeGeneral.general;
+package BinaryTreeGeneral;
+
+import BinaryTreeGeneral.general.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
