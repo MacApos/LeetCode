@@ -26,6 +26,7 @@ public class BinaryTreeZigZagLevelOrderTraversal {
             result.add(new ArrayList<>());
         }
 
+
         recursion(root.left, level + 1, !zigZag, result);
         recursion(root.right, level + 1, !zigZag, result);
         if(zigZag){
