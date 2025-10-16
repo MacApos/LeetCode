@@ -1,6 +1,7 @@
 package Graphs.DijkstrasAlgorithm;
 
-import Graphs.general.GraphUtil;
+import Graphs.Util.Generator;
+import Graphs.Util.GraphUtil;
 
 import java.util.*;
 
@@ -22,52 +23,23 @@ public class DijkstrasAlgorithm {
         g.addEdge(1, 3, 1);// C - E, weight 3
         g.addEdge(2, 3, 8);// D - E, weight 3
 
-//        g.addEdge(2, 0, 4);// D - A, weight 5
-//        g.addEdge(2, 3, 2);// D - E, weight 2
-//        g.addEdge(0, 1, 3);// A - C, weight 3
-//        g.addEdge(0, 3, 4);// A - E, weight 4
-//        g.addEdge(3, 1, 4);// E - C, weight 4
-
-//        g.addVertexData(0, "A");
-//        g.addVertexData(1, "B");
-//        g.addVertexData(2, "C");
-//        g.addVertexData(3, "D");
-//        g.addVertexData(4, "E");
-//        g.addVertexData(5, "F");
-//        g.addVertexData(6, "G");
-
-//        g.addEdge(3, 0, 4);// D - A, weight 5
-//        g.addEdge(3, 4, 2);// D - E, weight 2
-//        g.addEdge(0, 2, 3);// A - C, weight 3
-//        g.addEdge(0, 4, 4);// A - E, weight 4
-//        g.addEdge(4, 2, 4);// E - C, weight 4
-//        g.addEdge(4, 6, 5);// E - G, weight 5
-//        g.addEdge(2, 5, 5);// C - F, weight 5
-//        g.addEdge(2, 1, 2);// C - B, weight 2
-//        g.addEdge(1, 5, 2);// B - F, weight 2
-//        g.addEdge(6, 5, 5);// G - F, weight 5
-
-        vertexData = g.getVertexData();
-        adjMatrix = g.getAdjacentMatrix();
-        for (int[] matrix : adjMatrix) {
-            System.out.println(Arrays.toString(matrix));
-        }
-        ArrayList<ArrayList<int[]>> adjacentArrayList = g.getAdjacentArrayList();
-
-        int src = 0;
-//        int[] dijkstra = dijkstra(adjacentArrayList, src);
-        int[] dijkstra2 = dijkstraV2(adjacentArrayList, src);
-//        int[] dijkstra3 = dijkstraV3(adjacentArrayList, src);
-//        int[] dijkstra4 = dijkstraV4("D");
-//        int[] dijkstra5 = dijkstraV5(adjacentArrayList, src);
-//        System.out.println(Arrays.toString(dijkstra));
-        System.out.println(Arrays.toString(dijkstra2));
-//        System.out.println(Arrays.toString(dijkstra3));
-//        System.out.println(Arrays.toString(dijkstra4));
-//        System.out.println(Arrays.toString(dijkstra5));
+        int src = 2;
+//        int[][] edges = Generator.populateArray(4, 5,false);
+        int[][] edges = {
+                {0, 2, 6, 1},
+                {2, 0, 0, 5},
+                {6, 0, 0, 4},
+                {1, 5, 4, 0}
+        };
+        Generator.printGraph(edges);
+        Generator.printArray(edges);
+        ArrayList<ArrayList<int[]>> adj = GraphUtil.adjacentMatrixToAdjacentListWithWeights(edges);
+        new GraphUtil().printList(adj);
+        int[] dijkstra = dijkstra(adj, src);
+        System.out.println(Arrays.toString(dijkstra));
     }
 
-    public static int[] dijkstra(ArrayList<ArrayList<int[]>> edges, int src) {
+    public static int[] dijkstraSet(ArrayList<ArrayList<int[]>> edges, int src) {
         Set<Integer> hashSet = new LinkedHashSet<>();
         int[] distance = new int[edges.size()];
         Arrays.fill(distance, Integer.MAX_VALUE);
@@ -94,7 +66,8 @@ public class DijkstrasAlgorithm {
         return distance;
     }
 
-    public static int[] dijkstraV5(ArrayList<ArrayList<int[]>> edges, int src) {
+
+    public static int[] dijkstraDeque(ArrayList<ArrayList<int[]>> edges, int src) {
         ArrayDeque<Integer> deque = new ArrayDeque<>();
         int[] distance = new int[edges.size()];
         Arrays.fill(distance, Integer.MAX_VALUE);
@@ -126,7 +99,38 @@ public class DijkstrasAlgorithm {
         return distance;
     }
 
-    static int[] dijkstraV2(ArrayList<ArrayList<int[]>> edges, int src) {
+    static int[] dijkstra(ArrayList<ArrayList<int[]>> edges, int src) {
+        Queue<int[]> pq = new PriorityQueue<>(Comparator.comparing(a -> a[1]));
+        int size = edges.size();
+        int[] distance = new int[size];
+        boolean[] visited = new boolean[size];
+        Arrays.fill(distance, Integer.MAX_VALUE);
+
+        distance[src] = 0;
+        pq.add(new int[]{src, 0});
+
+        while (!pq.isEmpty()) {
+            int u = pq.poll()[0];
+            if (visited[u]) {
+                continue;
+            }
+            visited[u] = true;
+
+            for (int[] neighbor : edges.get(u)) {
+                int v = neighbor[0];
+                int weight = neighbor[1];
+                int shortestDist = distance[u] + weight;
+                if (distance[v] > shortestDist) {
+                    distance[v] = shortestDist;
+                    pq.add(new int[]{v, shortestDist});
+                }
+            }
+        }
+
+        return distance;
+    }
+
+    static int[] dijkstraPriorityQueue(ArrayList<ArrayList<int[]>> edges, int src) {
 
         // PriorityQueue to store vertices to be processed
         // Each element is a pair: [distance, node]
@@ -166,7 +170,7 @@ public class DijkstrasAlgorithm {
         return distance;
     }
 
-    static int[] dijkstraV3(ArrayList<ArrayList<int[]>> edges, int src) {
+    static int[] dijkstraConvertedFromPython(ArrayList<ArrayList<int[]>> edges, int src) {
         int[] distance = new int[edges.size()];
         Arrays.fill(distance, Integer.MAX_VALUE);
         boolean[] visited = new boolean[edges.size()];
@@ -202,7 +206,7 @@ public class DijkstrasAlgorithm {
         return distance;
     }
 
-    public static int[] dijkstraV4(String startVertexData) {
+    public static int[] dijkstraConvertedFromPythonV2(String startVertexData) {
         int startVertex = findIndex(startVertexData);
         int[] distances = new int[size];
         boolean[] visited = new boolean[size];

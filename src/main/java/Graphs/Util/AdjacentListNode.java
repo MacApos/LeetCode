@@ -1,4 +1,4 @@
-package Graphs.general;
+package Graphs.Util;
 
 public record AdjacentListNode(int v, int weight) {
     @Override

@@ -1,6 +1,6 @@
 package Graphs.AcyclicGraphAndTopologicalSort;
 
-import Graphs.general.GraphUtil;
+import Graphs.Util.GraphUtil;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ public class TopologicalSort {
         int[][] adjacentMatrix = new int[][]{
                 {2, 3}, {3, 1}, {4, 0},
                 {4, 1}, {5, 0}, {5, 2}};
-        ArrayList<ArrayList<Integer>> adjacentList = GraphUtil.adjacentMatrixToArrayListOfIntegers(adjacentMatrix);
+        ArrayList<ArrayList<Integer>> adjacentList = GraphUtil.edgesMatrixToAdjacentList(adjacentMatrix);
         topologicalSort(adjacentList.size(), adjacentList);
     }
 
@@ -29,7 +29,7 @@ public class TopologicalSort {
     public static int[] topologicalSortListOfArrays(int v, ArrayList<ArrayList<int[]>> adjacentList) {
         ArrayList<ArrayList<Integer>> arrayLists = new ArrayList<>();
         for (ArrayList<int[]> list : adjacentList) {
-            arrayLists.add( list.stream().map(a -> a[0]).collect(Collectors.toCollection(ArrayList::new)));
+            arrayLists.add(list.stream().map(a -> a[0]).collect(Collectors.toCollection(ArrayList::new)));
         }
         return topologicalSort(v, arrayLists);
     }

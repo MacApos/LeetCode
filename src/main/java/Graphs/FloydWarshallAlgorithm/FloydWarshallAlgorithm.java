@@ -1,34 +1,35 @@
 package Graphs.FloydWarshallAlgorithm;
 
-import Graphs.general.Generator;
+import Graphs.Util.Generator;
+import Graphs.Util.GraphUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class FloydWarshallAlgorithm {
     static int INF = Integer.MAX_VALUE;
+    static int[][] distance;
 
     public static void main(String[] args) {
+//        distance = Generator.populateArray(4, 8, true);
+//        populateArrayWithInf(distance);
 
-        int[][] dist = {
-                {0, INF, 2, INF},
-                {5, 0, INF, INF},
-                {8, 7, 0, INF},
-                {1, 2, INF, 0},
+        distance = new int[][]{
+                {0, 0, 2, 0},
+                {0, 0, 9, 2},
+                {0, 1, 0, 9},
+                {6, 9, 7, 0},
         };
-        int[][] distance = Generator.populateArray(4, 6, true);
+        Generator.printGraph(distance);
         populateArrayWithInf(distance);
-        for (int[] ints : floydWarshallAlgorithm(dist)) {
-            System.out.println(Arrays.toString(ints));
-        }
-        System.out.println();
-        for (int[] ints :floydWarshallAlgorithmV2(dist)) {
-            System.out.println(Arrays.toString(ints));
-        }
+
+        int[][] ints = floydWarshallAlgorithmPath(distance);
+        printArray(ints);
     }
 
     public static void populateArrayWithInf(int[][] adjacentMatrix) {
-        StringBuilder result = new StringBuilder("{\n");
         for (int i = 0; i < adjacentMatrix.length; i++) {
             int[] row = adjacentMatrix[i];
             for (int j = 0; j < row.length; j++) {
@@ -36,6 +37,12 @@ public class FloydWarshallAlgorithm {
                     row[j] = INF;
                 }
             }
+        }
+    }
+
+    public static void printArray(int[][] adjacentMatrix) {
+        StringBuilder result = new StringBuilder("{\n");
+        for (int[] row : adjacentMatrix) {
             result.append("{")
                     .append(Arrays.stream(row)
                             .mapToObj(d -> d == Integer.MAX_VALUE ? "INF" : String.valueOf(d))
@@ -75,7 +82,7 @@ public class FloydWarshallAlgorithm {
         for (int i = 0; i < result.length; i++) {
             result[i] = Arrays.copyOf(dist[i], dist[i].length);
         }
-        return  result;
+        return result;
     }
 
     public static int[][] floydWarshallAlgorithm(int[][] dist) {
@@ -121,5 +128,54 @@ public class FloydWarshallAlgorithm {
         }
         return result;
     }
+
+    public static int[][] floydWarshallAlgorithmPath(int[][] dist) {
+
+        int[][] result = deepCopy(dist);
+        ArrayList<ArrayList<ArrayList<Integer>>> adj = new ArrayList<>();
+
+        for (int i = 0; i < result.length; i++) {
+            ArrayList<ArrayList<Integer>> row = new ArrayList<>();
+            for (int j = 0; j < result[i].length; j++) {
+                if (i == j) {
+                    row.add(new ArrayList<>());
+                } else if (result[i][j] != INF) {
+                    row.add(new ArrayList<>(List.of(j)));
+                } else {
+                    row.add(null);
+                }
+            }
+            adj.add(row);
+        }
+
+        int length = result.length;
+        for (int k = 0; k < length; k++) {
+            for (int i = 0; i < length; i++) {
+                if (i != k && dist[i][k] != INF) {
+                    ArrayList<Integer> ik = adj.get(i).get(k);
+
+                    for (int j = 0; j < length; j++) {
+                        if (i != j && dist[k][j] != INF) {
+                            ArrayList<Integer> kj = adj.get(k).get(j);
+
+                            if (dist[i][j] > dist[i][k] + dist[k][j]) {
+                                result[i][j] = dist[i][k] + dist[k][j];
+
+                                ArrayList<Integer> shorterPath = new ArrayList<>(ik);
+                                shorterPath.addAll(kj);
+                                adj.get(i).set(j, shorterPath);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        for (ArrayList<ArrayList<Integer>> arrayLists : adj) {
+            System.out.println(arrayLists);
+        }
+
+        return result;
+    }
+
 
 }

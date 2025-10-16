@@ -1,6 +1,6 @@
 package Graphs.AcyclicGraphAndTopologicalSort;
 
-import Graphs.general.GraphUtil;
+import Graphs.Util.GraphUtil;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class DirectedAcyclicGraph {
         g.addEdge(3, 4, -1);
         g.addEdge(4, 5, -2);
 
-        ArrayList<ArrayList<int[]>> adjacentArrayList = g.getAdjacentArrayList();
+        ArrayList<ArrayList<int[]>> adjacentArrayList = g.getAdjacentListWithWeights();
         g.printList(adjacentArrayList);
 
 //        TopologicalSort.topologicalSortListOfArrays(size, adjacentArrayList);

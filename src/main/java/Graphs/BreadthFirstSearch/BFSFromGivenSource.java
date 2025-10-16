@@ -1,6 +1,6 @@
 package Graphs.BreadthFirstSearch;
 
-import Graphs.general.GraphUtil;
+import Graphs.Util.GraphUtil;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -8,7 +8,8 @@ import java.util.ArrayList;
 
 public class BFSFromGivenSource {
     public static void main(String[] args) {
-        ArrayList<ArrayList<Integer>> adj = GraphUtil.adjacentMatrixToArrayListOfIntegers(new int[][]{{1, 2}, {0, 2, 3}, {0, 1, 4}, {1, 4}, {2, 3}});
+        ArrayList<ArrayList<Integer>> adj = GraphUtil.edgesMatrixToAdjacentList(
+                new int[][]{{1, 2}, {0, 2, 3}, {0, 1, 4}, {1, 4}, {2, 3}});
 
         for (int i = 0; i < adj.size(); i++) {
             ArrayList<Integer> bfs = bfs(adj, i);

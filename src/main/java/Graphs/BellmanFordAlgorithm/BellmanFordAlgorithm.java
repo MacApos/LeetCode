@@ -1,7 +1,7 @@
 package Graphs.BellmanFordAlgorithm;
 
-import Graphs.general.GraphUtil;
-import Graphs.general.Result;
+import Graphs.Util.GraphUtil;
+import Graphs.Util.Result;
 
 import java.util.Arrays;
 

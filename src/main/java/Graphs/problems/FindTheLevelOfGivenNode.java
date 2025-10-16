@@ -1,13 +1,14 @@
 package Graphs.problems;
 
-import Graphs.general.GraphUtil;
+import Graphs.Util.GraphUtil;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 
 public class FindTheLevelOfGivenNode {
     public static void main(String[] args) {
-        ArrayList<ArrayList<Integer>> adj = GraphUtil.createList(new int[][]{{0, 1}, {0, 2}, {1, 3}, {2, 4}});
+        ArrayList<ArrayList<Integer>> adj = GraphUtil.edgesMatrixToAdjacentList(
+                new int[][]{{0, 1}, {0, 2}, {1, 3}, {2, 4}});
         int x = 1;
         int level = findLevel(adj, x);
         System.out.println(level);
