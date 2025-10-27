@@ -126,7 +126,7 @@ public class EvaluateDivision {
                     .collect(Collectors.toCollection(ArrayList::new)));
         }
 
-        new GraphUtil().printList(edges);
+        GraphUtil.printAdjacentList(edges);
         int size = edges.size();
         ArrayList<ArrayList<ArrayList<Integer>>> grid = new ArrayList<>();
 

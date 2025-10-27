@@ -14,7 +14,7 @@ public class BreadthFirstSearch {
         adj.add(new ArrayList<>(Arrays.asList(0, 4)));
         adj.add(new ArrayList<>(Arrays.asList(1,4)));
         adj.add(new ArrayList<>(Arrays.asList(2,3)));
-        new GraphUtil().printList(adj);
+        GraphUtil.printAdjacentList(adj);
 
     }
 

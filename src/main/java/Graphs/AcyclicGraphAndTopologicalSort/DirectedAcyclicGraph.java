@@ -28,7 +28,7 @@ public class DirectedAcyclicGraph {
         g.addEdge(4, 5, -2);
 
         ArrayList<ArrayList<int[]>> adjacentArrayList = g.getAdjacentListWithWeights();
-        g.printList(adjacentArrayList);
+        g.printAdjacentListWithVertexData(adjacentArrayList);
 
 //        TopologicalSort.topologicalSortListOfArrays(size, adjacentArrayList);
         int[] acyclicGraph = directedAcyclicGraph(adjacentArrayList, 1);

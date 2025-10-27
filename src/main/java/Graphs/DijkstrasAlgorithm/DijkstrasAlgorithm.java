@@ -31,10 +31,10 @@ public class DijkstrasAlgorithm {
                 {6, 0, 0, 4},
                 {1, 5, 4, 0}
         };
-        Generator.printGraph(edges);
-        Generator.printArray(edges);
+        Generator.printGraphForVisualization(edges);
+        Generator.printAdjacentMatrix(edges);
         ArrayList<ArrayList<int[]>> adj = GraphUtil.adjacentMatrixToAdjacentListWithWeights(edges);
-        new GraphUtil().printList(adj);
+        GraphUtil.printAdjacentList(adj);
         int[] dijkstra = dijkstra(adj, src);
         System.out.println(Arrays.toString(dijkstra));
     }

@@ -20,7 +20,7 @@ public class GraphUtil {
     public ArrayList<ArrayList<int[]>> adjacentListWithWeights;
     public ArrayList<ArrayList<Integer>> adjacentList;
     public int size;
-    public String[] vertexData;
+    public  String[] vertexData;
 
     public GraphUtil(int size) {
         this.size = size;
@@ -32,16 +32,6 @@ public class GraphUtil {
             adjacentList.add(new ArrayList<>());
         }
         this.vertexData = new String[size];
-    }
-
-    public static void printArray(String testcase) {
-        String replace = testcase
-                .replace("[[", "{\n{")
-                .replace("[", "{")
-                .replace("],", "},\n")
-                .replace("]]", "}\n};")
-                .replace("\"", "'");
-        System.out.println(replace);
     }
 
     public static int[][] stringToIntArray(String testcase) {
@@ -58,29 +48,64 @@ public class GraphUtil {
         return result;
     }
 
-    public <T> void printList(ArrayList<ArrayList<T>> list) {
+    private static  <T> ArrayList<String> collectData(ArrayList<ArrayList<T>> list) {
+        ArrayList<String> collected = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             String collect = list.get(i).stream().map(e -> {
                 if (e instanceof Integer) {
                     return e.toString();
                 }
                 if (e instanceof int[]) {
-                    return Arrays.toString((int[]) e);
+                    return "{" + Arrays.stream((int[]) e)
+                            .mapToObj(String::valueOf)
+                            .collect(Collectors.joining(", ")) + "}";
                 }
                 return "";
             }).collect(Collectors.joining(", "));
-            System.out.printf("%s\t%s\n", vertexData == null || vertexData[i] == null ? i : vertexData[i], collect);
+            collected.add(collect);
+        }
+        return collected;
+    }
+
+    public  <T> void printAdjacentListWithVertexData(ArrayList<ArrayList<T>> list) {
+        ArrayList<String> collected = collectData(list);
+        for (int i = 0; i < list.size(); i++) {
+            System.out.printf("%s\t%s\n", vertexData == null || vertexData[i] == null ? i : vertexData[i], collected.get(i));
         }
     }
 
-    public int[][] getAdjacentMatrix() {
-        for (int[] matrix : adjacentMatrix) {
-            System.out.println(Arrays.toString(matrix));
+    public static  <T> void printAdjacentList(ArrayList<ArrayList<T>> list) {
+        ArrayList<String> collected = collectData(list);
+        for (int i = 0; i < list.size(); i++) {
+            System.out.printf("%s\t%s\n",  i, collected.get(i));
         }
-        return adjacentMatrix;
     }
 
-    //    u - vertex 1., v - vertex 2., weight - edge weight
+    public static  <T> void printAdjacentListAsMatrix(ArrayList<ArrayList<T>> list) {
+        ArrayList<String> collected = collectData(list);
+        System.out.println("{");
+        for (int i = 0; i < list.size(); i++) {
+            String s = String.format("{%s}",  collected.get(i));
+            if(i < list.size() - 1){
+                s += ",";
+            }
+            System.out.printf("%s\n", s);
+        }
+        System.out.println("};");
+    }
+
+    public static void printAdjacentListAsMatrixV2(ArrayList<ArrayList<int[]>> list) {
+        System.out.println("{");
+        for (int i = 0; i < list.size(); i++) {
+
+            for (int[] anInt : list.get(i)) {
+                String collect = Arrays.stream(anInt).mapToObj(String::valueOf).collect(Collectors.joining(", "));
+                System.out.printf("{%s, %s},\n", i, collect);
+            }
+        }
+        System.out.println("};");
+    }
+
     public void addEdge(int u, int v, int weight) {
         if (u >= 0 && u < size && v >= 0 && v < size) {
             adjacentListWithWeights.get(u).add(new int[]{v, weight});
@@ -114,14 +139,6 @@ public class GraphUtil {
         return result;
     }
 
-    public static ArrayList<ArrayList<Integer>> edgesMatrixToUndirectedAdjacentList(int[][] edges) {
-        return edgesMatrixToAdjacentList(edges, false);
-    }
-
-    public static ArrayList<ArrayList<Integer>> edgesMatrixToAdjacentList(int[][] edges) {
-        return edgesMatrixToAdjacentList(edges, true);
-    }
-    
     // edges matrix
     private static ArrayList<ArrayList<Integer>> edgesMatrixToAdjacentList(int[][] edges,
                                                                            boolean directed) {
@@ -140,7 +157,12 @@ public class GraphUtil {
         return result.stream().map(ArrayList::new).collect(Collectors.toCollection(ArrayList::new));
     }
 
+    public static ArrayList<ArrayList<Integer>> edgesMatrixToUndirectedAdjacentList(int[][] edges) {
+        return edgesMatrixToAdjacentList(edges, false);
+    }
 
-
+    public static ArrayList<ArrayList<Integer>> edgesMatrixToAdjacentList(int[][] edges) {
+        return edgesMatrixToAdjacentList(edges, true);
+    }
 }
 

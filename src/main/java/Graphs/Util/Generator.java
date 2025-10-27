@@ -5,13 +5,19 @@ import java.util.*;
 
 public class Generator {
     public static void main(String[] args) {
-        int nodes = 5;
-        int[][] ints = populateArray(nodes,  false);
-        printGraph(ints);
-//
-        ArrayList<ArrayList<int[]>> arrayLists = GraphUtil.adjacentMatrixToAdjacentListWithWeights(ints);
-        new GraphUtil().printList(arrayLists);
+        int[][]    ints;
+         ints = new int[][]{
+                {0, 10, 0, 5},
+                {-4, 0, -6, 9},
+                {0, -10, 0, -1},
+                {-10, 0, 0, 0}
+        };
+        ints = populateAdjacentMatrix(4, 8, true);
 
+        printGraphForVisualization(ints);
+        printAdjacentMatrix(ints);
+        ArrayList<ArrayList<int[]>> arrayLists = GraphUtil.adjacentMatrixToAdjacentListWithWeights(ints);
+        GraphUtil.printAdjacentListAsMatrixV2(arrayLists);
     }
 
     private static int maxNumberOfEdges(int nodes, boolean directed) {
@@ -23,11 +29,11 @@ public class Generator {
         return random.nextInt(nodes - 1, maxNumberOfEdges(nodes, directed));
     }
 
-    public static int[][] populateArray(int nodes, boolean directed) {
-        return populateArray(nodes, randomNumberOfEdges(nodes, directed), directed);
+    public static int[][] populateAdjacentMatrix(int nodes, boolean directed) {
+        return populateAdjacentMatrix(nodes, randomNumberOfEdges(nodes, directed), directed);
     }
 
-    public static int[][] populateArray(int nodes, int edges, boolean directed) {
+    public static int[][] populateAdjacentMatrix(int nodes, int edges, boolean directed) {
         Random random = new Random();
         int[][] distance = new int[nodes][nodes];
         int minNodes = 2;
@@ -63,19 +69,19 @@ public class Generator {
         return distance;
     }
 
-    public static void printArray(int[][] array) {
+    public static void printAdjacentMatrix(int[][] array) {
         StringBuilder sb = new StringBuilder("{\n");
         for (int i = 0; i < array.length; i++) {
             sb.append("{");
             int[] a = array[i];
             for (int j = 0; j < a.length; j++) {
                 sb.append(a[j]);
-                if(j < a.length-1){
+                if (j < a.length - 1) {
                     sb.append(", ");
                 }
             }
             sb.append("}");
-            if(i < array.length-1){
+            if (i < array.length - 1) {
                 sb.append(",\n");
             }
         }
@@ -83,7 +89,7 @@ public class Generator {
         System.out.println(sb);
     }
 
-    public static void printGraph(int[][] distance) {
+    public static void printGraphForVisualization(int[][] distance) {
         for (int i = 0; i < distance.length; i++) {
             for (int j = 0; j < distance[i].length; j++) {
                 if (distance[i][j] != 0) {

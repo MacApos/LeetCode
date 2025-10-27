@@ -1,7 +1,6 @@
 package Graphs.FloydWarshallAlgorithm;
 
 import Graphs.Util.Generator;
-import Graphs.Util.GraphUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +21,7 @@ public class FloydWarshallAlgorithm {
                 {0, 1, 0, 9},
                 {6, 9, 7, 0},
         };
-        Generator.printGraph(distance);
+        Generator.printGraphForVisualization(distance);
         populateArrayWithInf(distance);
 
         int[][] ints = floydWarshallAlgorithmPath(distance);

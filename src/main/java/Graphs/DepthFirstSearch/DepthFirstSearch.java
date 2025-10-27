@@ -8,7 +8,7 @@ public class DepthFirstSearch {
     public static void main(String[] args) {
         int[][] edges = { { 1, 2 },{ 1, 0 },{ 2, 0 },{ 2, 3 },{ 2, 4 } };
         ArrayList<ArrayList<Integer>> adj = GraphUtil.edgesMatrixToAdjacentList(edges);
-        new GraphUtil().printList(adj);
+        GraphUtil.printAdjacentList(adj);
 
         ArrayList<Integer> arrayList = depthFirstSearch(adj);
         System.out.println(arrayList);
