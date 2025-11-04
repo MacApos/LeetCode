@@ -1,4 +1,4 @@
-package Arrays.LeetCode.v1;
+package Arrays.General;
 
 import java.util.*;
 import java.util.stream.Collectors;
