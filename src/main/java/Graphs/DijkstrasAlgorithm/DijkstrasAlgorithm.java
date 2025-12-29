@@ -31,12 +31,33 @@ public class DijkstrasAlgorithm {
                 {6, 0, 0, 4},
                 {1, 5, 4, 0}
         };
-        Generator.printGraphForVisualization(edges);
-        Generator.printAdjacentMatrix(edges);
+//        Generator.printGraphForVisualization(edges);
+//        Generator.printAdjacentMatrix(edges);
         ArrayList<ArrayList<int[]>> adj = GraphUtil.adjacentMatrixToAdjacentListWithWeights(edges);
-        GraphUtil.printAdjacentList(adj);
+//        GraphUtil.printAdjacentList(adj);
         int[] dijkstra = dijkstra(adj, src);
-        System.out.println(Arrays.toString(dijkstra));
+//        System.out.println(Arrays.toString(dijkstra));
+
+        edges = new int[][]{
+                {0, 1, 6},
+                {0, 2, 10},
+                {1, 0, 6},
+                {1, 2, 8},
+                {1, 3, 3},
+                {2, 1, 3},
+                {3, 1, 9},
+                {3, 2, 4},
+        };
+
+        adj = new ArrayList<>(List.of(
+                new ArrayList<>(List.of(new int[]{1, 6}, new int[]{2, 10})),
+                new ArrayList<>(List.of(new int[]{0, 6}, new int[]{2, 8}, new int[]{3, 3})),
+                new ArrayList<>(List.of(new int[]{1, 3})),
+                new ArrayList<>(List.of(new int[]{1, 9}, new int[]{2, 4}))
+        ));
+
+        int[] distance = dijkstraWithoutPriorityQueue(3, adj);
+        System.out.println(Arrays.toString(distance));
     }
 
     public static int[] dijkstraSet(ArrayList<ArrayList<int[]>> edges, int src) {
@@ -96,6 +117,41 @@ public class DijkstrasAlgorithm {
             count++;
         }
         System.out.println(count);
+        return distance;
+    }
+/*
+    won't work because you should always take shorter path first (to nearest vertex, with smaller weight), otherwise you
+    can mark path passing one vertex as the shortest and even though shortest path passing this vertex exists, it won't
+    be checked because this vertex is already visited
+ */
+    static int[] dijkstraWithoutPriorityQueue(int src, ArrayList<ArrayList<int[]>> adj) {
+        int V = adj.size();
+        boolean[] visited = new boolean[V];
+        int[] distance = new int[V];
+        ArrayDeque<int[]> queue = new ArrayDeque<>();
+
+        Arrays.fill(distance, Integer.MAX_VALUE);
+        distance[src] = 0;
+        queue.add(new int[]{src, 0});
+
+        while (!queue.isEmpty()) {
+            int u = queue.poll()[0];
+            if (visited[u]) {
+                continue;
+            }
+            visited[u] = true;
+
+            for (int[] neighbor : adj.get(u)) {
+                int v = neighbor[0];
+                int weight = neighbor[1];
+                int shortestDist = distance[u] + weight;
+                if (distance[v] > shortestDist) {
+                    distance[v] = shortestDist;
+                    queue.add(neighbor);
+                }
+            }
+        }
+
         return distance;
     }
 
