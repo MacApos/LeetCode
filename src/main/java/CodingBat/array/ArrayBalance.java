@@ -1,4 +1,6 @@
-package CodingBat;
+package CodingBat.array;
+
+import java.util.Arrays;
 
 public class ArrayBalance {
     public static void main(String[] args) {
@@ -13,6 +15,9 @@ public class ArrayBalance {
     }
 
     public static boolean canBalance(int[] nums) {
+        boolean isEven = Arrays.stream(nums).sum() % 2 == 0;
+        System.out.println(isEven);
+
         if (nums.length < 2) {
             return false;
         }

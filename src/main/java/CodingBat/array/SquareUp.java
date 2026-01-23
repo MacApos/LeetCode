@@ -1,4 +1,4 @@
-package CodingBat;
+package CodingBat.array;
 
 import java.util.Arrays;
 
