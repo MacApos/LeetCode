@@ -18,6 +18,7 @@ public class MaxSpan {
             max = Math.max(max, i - hashMap.get(num) + 1);
         }
         return max;
+
     }
 
 }
