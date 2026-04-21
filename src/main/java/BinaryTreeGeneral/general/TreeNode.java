@@ -65,6 +65,7 @@ public class TreeNode {
             return node;
         }
         node.left = inorderTraversal(Arrays.copyOfRange(values, 0, root));
+        System.out.println(node.val);
         node.right = inorderTraversal(Arrays.copyOfRange(values, root + 1, length));
         return node;
     }
